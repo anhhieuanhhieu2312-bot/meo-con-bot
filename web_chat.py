@@ -13,7 +13,8 @@ genai.configure(api_key=api_key)
 # Khởi tạo model
 # Sửa dòng này:
 # Sử dụng bản 2.5 Flash nhanh và ổn định nhất trong list của bạn
-model = genai.GenerativeModel('gemini-2.5-flash')
+# Sửa thành gemini-1.5-flash (Bản ổn định, miễn phí nhiều)
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 # --- QUẢN LÝ LỊCH SỬ CHAT (TRÍ NHỚ) ---
 # Kiểm tra xem trong phiên làm việc (session) đã có cuộc trò chuyện nào chưa

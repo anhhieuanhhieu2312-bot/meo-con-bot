@@ -150,7 +150,19 @@ with st.sidebar:
 current_id = history['current_session']
 current_session_data = history['sessions'][current_id]
 
-st.title("meo meo đây... 🐾") 
+# --- GIAO DIỆN CHÍNH (Sửa lại để có nút Chat mới ngay tiêu đề) ---
+col_header_1, col_header_2 = st.columns([5, 1])
+with col_header_1:
+    st.title("meo meo đây... 🐾") 
+with col_header_2:
+    st.markdown("<br>", unsafe_allow_html=True) # Căn chỉnh cho nút xuống thấp chút
+    if st.button("➕", help="Tạo cuộc trò chuyện mới"):
+        new_id = str(uuid.uuid4())
+        timestamp = datetime.now().strftime("%d/%m %H:%M")
+        history['sessions'][new_id] = {"title": f"Trò chuyện {timestamp}", "messages": []}
+        history['current_session'] = new_id
+        data_manager.save_data(st.session_state['current_user'], history)
+        st.rerun()
 
 # --- HIỂN THỊ TIN NHẮN CŨ ---
 for msg in current_session_data['messages']:

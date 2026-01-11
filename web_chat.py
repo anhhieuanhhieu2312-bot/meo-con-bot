@@ -6,48 +6,60 @@ import uuid
 import re 
 import os 
 from datetime import datetime
-import streamlit as st
-# Lấy API key từ kho bảo mật (Secrets)
-# ... (các dòng import ở trên) ...
 
-# Thiết lập giao diện
+# ==========================================
+# 0. CẤU HÌNH GIAO DIỆN & CSS (Fix lỗi hiển thị Mobile)
+# ==========================================
+st.set_page_config(page_title="meo meo đây...", page_icon="🐾")
+
+# Thiết lập giao diện CSS
 st.markdown("""
 <style>
-    /* ... (Các code CSS cũ của bạn giữ nguyên, ví dụ hình nền v.v...) ... */
+    /* Ẩn Sidebar mặc định của Streamlit để dùng Menu riêng */
+    [data-testid="stSidebar"] {
+        display: none;
+    }
 
-    /* DÁN ĐOẠN CODE MỚI VÀO ĐÂY NHÉ */
+    /* Ép toàn bộ chữ tiêu đề, đoạn văn, nhãn dán thành màu đen */
     h1, h2, h3, h4, h5, h6, p, span, div, label, .stMarkdown {
         color: #000000 !important;
     }
+
+    /* Ép màu chữ trong khung chat */
     .stChatMessage p {
         color: #000000 !important;
     }
-    .stApp {
-        background-color: #ffffff !important; /* Dòng này đảm bảo nền trắng */
-    }
 
+    /* Đảm bảo nền trắng */
+    .stApp {
+        background-color: #ffffff !important;
+    }
+    
+    /* Tùy chỉnh nút bấm cho đẹp hơn */
+    .stButton button {
+        border-radius: 10px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-
-# --- CẤU HÌNH TRANG ---
-st.set_page_config(page_title="meo meo đây...", page_icon="🐾")
 styles.apply_custom_style()
 
-# --- CẤU HÌNH API ---
-import streamlit as st
+# ==========================================
+# 1. CẤU HÌNH API & BIẾN
+# ==========================================
 
 # Lấy API key từ kho bảo mật (Secrets)
-api_key = st.secrets["GROQ_API_KEY"]
-if not api_key or "gsk_" not in api_key:
-    st.error("⚠️ Chưa có API Key Groq!")
+try:
+    api_key = st.secrets["GROQ_API_KEY"]
+except:
+    st.error("⚠️ Chưa cấu hình API Key trong Secrets!")
     st.stop()
+
+if not api_key or "gsk_" not in api_key:
+    st.error("⚠️ API Key không hợp lệ!")
+    st.stop()
+
 client = Groq(api_key=api_key)
-
-
-# ==========================================
-# 1. KHAI BÁO BIẾN & CÀI ĐẶT
-# ==========================================
 
 # --- CẤU HÌNH AVATAR ---
 user_avatar = "avatar.png" if os.path.exists("avatar.png") else "🌸"
@@ -84,18 +96,16 @@ def clean_text(text):
     return re.sub(r'\*.*?\*', '', text).strip()
 
 # ==========================================
-# 2. LOGIC ĐĂNG NHẬP (ĐÃ NÂNG CẤP AUTO-LOGIN)
+# 2. LOGIC ĐĂNG NHẬP (AUTO-LOGIN)
 # ==========================================
 
-# [MỚI] Kiểm tra URL xem có lưu tên người dùng không
 if 'current_user' not in st.session_state:
-    # Nếu trên thanh địa chỉ có ?user=TenBan, tự động lấy tên đó vào
     if "user" in st.query_params:
         st.session_state['current_user'] = st.query_params["user"]
     else:
         st.session_state['current_user'] = None
 
-# Nếu vẫn chưa có người dùng, hiện màn hình đăng nhập
+# Màn hình đăng nhập
 if not st.session_state['current_user']:
     st.markdown("<br><br><br>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 2, 1])
@@ -104,14 +114,10 @@ if not st.session_state['current_user']:
         st.write("Tên bạn là gì nhỉ?")
         username_input = st.text_input("Tên hoặc Biệt danh:", key="login_input")
         
-        if st.button("Bắt đầu trò chuyện 🌸"):
+        if st.button("Bắt đầu trò chuyện 🌸", use_container_width=True):
             if username_input.strip():
-                # Lưu vào Session
                 st.session_state['current_user'] = username_input.strip()
-                # [MỚI] Lưu vào URL để F5 không bị mất
                 st.query_params["user"] = username_input.strip()
-                
-                # Load dữ liệu
                 user_data = data_manager.load_data(st.session_state['current_user'])
                 st.session_state['history_data'] = user_data
                 st.rerun()
@@ -120,14 +126,14 @@ if not st.session_state['current_user']:
     st.stop()
 
 # ==========================================
-# 3. QUẢN LÝ LỊCH SỬ CHAT
+# 3. QUẢN LÝ DỮ LIỆU & LỊCH SỬ
 # ==========================================
-# Đảm bảo dữ liệu được load nếu auto-login
 if 'history_data' not in st.session_state:
     st.session_state['history_data'] = data_manager.load_data(st.session_state['current_user'])
 
 history = st.session_state['history_data']
 
+# Tạo phiên chat đầu tiên nếu chưa có
 if not history['sessions']:
     new_id = str(uuid.uuid4())
     timestamp = datetime.now().strftime("%d/%m %H:%M")
@@ -138,53 +144,64 @@ if not history['sessions']:
 if not history.get('current_session'):
     history['current_session'] = list(history['sessions'].keys())[0]
 
-# --- SIDEBAR ---
-with st.sidebar:
-    st.header(f"👤 {st.session_state['current_user']}")
-    if st.button("➕ Cuộc trò chuyện mới", use_container_width=True, key="new_chat"):
-        new_id = str(uuid.uuid4())
-        timestamp = datetime.now().strftime("%d/%m %H:%M")
-        history['sessions'][new_id] = {"title": f"Trò chuyện {timestamp}", "messages": []}
-        history['current_session'] = new_id
-        data_manager.save_data(st.session_state['current_user'], history)
-        st.rerun()
+# ==========================================
+# 4. GIAO DIỆN CHÍNH (MENU & CHAT)
+# ==========================================
 
-    st.divider()
-    st.write("📜 **Lịch sử:**")
-    session_ids = list(history['sessions'].keys())
-    for sess_id in reversed(session_ids):
-        sess_data = history['sessions'][sess_id]
-        btn_type = "primary" if sess_id == history['current_session'] else "secondary"
-        if st.button(sess_data['title'], key=sess_id, type=btn_type, use_container_width=True):
-            history['current_session'] = sess_id
+# --- TIÊU ĐỀ ---
+st.title("meo meo đây... 🐾")
+
+# --- MENU CHỨC NĂNG (Dạng xổ xuống - Tối ưu cho Mobile) ---
+with st.expander(f"☰ MENU CỦA {st.session_state['current_user'].upper()} (Lịch sử & Cài đặt)", expanded=False):
+    
+    # Hai nút chức năng chính: Chat mới & Đăng xuất
+    col_menu_1, col_menu_2 = st.columns(2)
+    
+    with col_menu_1:
+        if st.button("➕ Chat Mới", use_container_width=True):
+            new_id = str(uuid.uuid4())
+            timestamp = datetime.now().strftime("%d/%m %H:%M")
+            history['sessions'][new_id] = {"title": f"Trò chuyện {timestamp}", "messages": []}
+            history['current_session'] = new_id
+            data_manager.save_data(st.session_state['current_user'], history)
             st.rerun()
             
-    st.markdown("<br><br>", unsafe_allow_html=True)
-    if st.button("🚪 Đăng xuất"):
-        # [MỚI] Xóa thông tin khi đăng xuất
-        st.session_state['current_user'] = None
-        st.query_params.clear() # Xóa trên URL
-        st.rerun()
+    with col_menu_2:
+        if st.button("🚪 Đăng xuất", use_container_width=True):
+            st.session_state['current_user'] = None
+            st.query_params.clear()
+            st.rerun()
 
-# ==========================================
-# 4. HIỂN THỊ VÀ XỬ LÝ CHAT
-# ==========================================
+    st.markdown("---")
+    st.markdown("**📜 Lịch sử trò chuyện:**")
+
+    # Hiển thị danh sách lịch sử (Mới nhất lên đầu)
+    # Sắp xếp danh sách
+    sorted_sessions = sorted(
+        history['sessions'].items(),
+        key=lambda x: x[1].get('last_updated', ''), 
+        reverse=True
+    )
+    # Nếu chưa có last_updated thì sắp xếp theo key (thời gian tạo giả định)
+    if not sorted_sessions:
+        sorted_sessions = list(history['sessions'].items())
+
+    for s_id, s_data in sorted_sessions:
+        display_name = s_data['title']
+        # Đánh dấu cuộc trò chuyện đang xem
+        if s_id == history['current_session']:
+            display_name = f"👉 {display_name}"
+            btn_type = "primary"
+        else:
+            btn_type = "secondary"
+        
+        if st.button(display_name, key=f"hist_{s_id}", type=btn_type, use_container_width=True):
+            history['current_session'] = s_id
+            st.rerun()
+
+# --- XÁC ĐỊNH PHIÊN CHAT HIỆN TẠI ---
 current_id = history['current_session']
 current_session_data = history['sessions'][current_id]
-
-# --- GIAO DIỆN CHÍNH (Sửa lại để có nút Chat mới ngay tiêu đề) ---
-col_header_1, col_header_2 = st.columns([5, 1])
-with col_header_1:
-    st.title("meo meo đây... 🐾") 
-with col_header_2:
-    st.markdown("<br>", unsafe_allow_html=True) # Căn chỉnh cho nút xuống thấp chút
-    if st.button("➕", help="Tạo cuộc trò chuyện mới"):
-        new_id = str(uuid.uuid4())
-        timestamp = datetime.now().strftime("%d/%m %H:%M")
-        history['sessions'][new_id] = {"title": f"Trò chuyện {timestamp}", "messages": []}
-        history['current_session'] = new_id
-        data_manager.save_data(st.session_state['current_user'], history)
-        st.rerun()
 
 # --- HIỂN THỊ TIN NHẮN CŨ ---
 for msg in current_session_data['messages']:
@@ -194,11 +211,12 @@ for msg in current_session_data['messages']:
 
 # --- XỬ LÝ TIN NHẮN MỚI ---
 if prompt := st.chat_input("Tâm sự với meo đi..."):
+    # 1. Hiển thị tin nhắn người dùng ngay lập tức
     with st.chat_message("user", avatar=user_avatar):
         st.markdown(prompt)
     current_session_data['messages'].append({"role": "user", "content": prompt})
 
-    # Ngữ cảnh
+    # 2. Chuẩn bị ngữ cảnh cho Bot
     user_name = st.session_state.get('current_user', 'Bạn')
     personal_context = f"[THÔNG TIN]: Người dùng tên là '{user_name}'. Hãy gọi là '{user_name}' hoặc 'Cậu'."
     long_term_context = get_long_term_memory(history)
@@ -207,6 +225,7 @@ if prompt := st.chat_input("Tâm sự với meo đi..."):
     recent_messages = current_session_data['messages'][-50:]
     api_messages = [{"role": "system", "content": full_system_prompt}] + recent_messages
 
+    # 3. Gọi API và Stream câu trả lời
     with st.chat_message("assistant", avatar=bot_avatar):
         message_placeholder = st.empty()
         full_response = ""
@@ -226,9 +245,18 @@ if prompt := st.chat_input("Tâm sự với meo đi..."):
             final_clean_response = clean_text(full_response)
             message_placeholder.markdown(final_clean_response)
             
+            # 4. Lưu lại câu trả lời
             current_session_data['messages'].append({"role": "assistant", "content": final_clean_response})
+            
+            # Đặt tên tiêu đề nếu là tin nhắn đầu tiên
             if len(current_session_data['messages']) == 2:
                 current_session_data['title'] = (prompt[:30] + "...") if len(prompt) > 30 else prompt
+            
+            # Cập nhật thời gian update
+            current_session_data['last_updated'] = datetime.now().isoformat()
+            
+            # Lưu xuống file
             data_manager.save_data(st.session_state['current_user'], history)
+            
         except Exception as e:
             st.error(f"⚠️ Meo đang ngủ gật: {e}")

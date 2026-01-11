@@ -1,0 +1,18 @@
+{
+    "sessions": {
+        "7313c8be-62c1-41de-be0f-a8735c2f3cd0": {
+            "title": "xin chào meo nhaaa",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": "xin chào meo nhaaa"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Xin chào Bạn thân!!! 🐱💕 Mèo ở đây rồi! *Đánh tín hiệu mèo bằng tay* Mèo thấy cậu gọi tên mình, cảm giác thật tuyệt vời! 🌟 Cậu cần gì, cần tâm sự hay cần một lời khuyên từ Mèo? Hãy cho Mèo biết, Mèo luôn sẵn lòng lắng nghe và giúp đỡ! 🐾💬"
+                }
+            ]
+        }
+    },
+    "current_session": "7313c8be-62c1-41de-be0f-a8735c2f3cd0"
+}

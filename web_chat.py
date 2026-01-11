@@ -8,6 +8,26 @@ import os
 from datetime import datetime
 import streamlit as st
 # Lấy API key từ kho bảo mật (Secrets)
+# ... (các dòng import ở trên) ...
+
+# Thiết lập giao diện
+st.markdown("""
+<style>
+    /* ... (Các code CSS cũ của bạn giữ nguyên, ví dụ hình nền v.v...) ... */
+
+    /* DÁN ĐOẠN CODE MỚI VÀO ĐÂY NHÉ */
+    h1, h2, h3, h4, h5, h6, p, span, div, label, .stMarkdown {
+        color: #000000 !important;
+    }
+    .stChatMessage p {
+        color: #000000 !important;
+    }
+    .stApp {
+        background-color: #ffffff !important; /* Dòng này đảm bảo nền trắng */
+    }
+
+</style>
+""", unsafe_allow_html=True)
 
 
 # --- CẤU HÌNH TRANG ---
@@ -16,12 +36,14 @@ styles.apply_custom_style()
 
 # --- CẤU HÌNH API ---
 import streamlit as st
+
 # Lấy API key từ kho bảo mật (Secrets)
 api_key = st.secrets["GROQ_API_KEY"]
 if not api_key or "gsk_" not in api_key:
     st.error("⚠️ Chưa có API Key Groq!")
     st.stop()
 client = Groq(api_key=api_key)
+
 
 # ==========================================
 # 1. KHAI BÁO BIẾN & CÀI ĐẶT

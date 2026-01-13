@@ -1,0 +1,19 @@
+{
+    "sessions": {
+        "4ee0e458-27bb-4d79-a656-317bd1dbe2d8": {
+            "title": "xin chào meooo nhaa",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": "xin chào meooo nhaa"
+                },
+                {
+                    "role": "assistant",
+                    "content": "chào jin nhé, meo thấy vui vì lại được trò chuyện với jin rồi 💖. meo hy vọng buổi tối này của jin thật tuyệt vời và ấm áp, không có gì phải lo lắng hay buồn bã cả 😽. meo luôn ở đây để lắng nghe và chia sẻ mọi thứ với jin, nên nếu có gì muốn nói hoặc cần một người bạn tâm sự, thì hãy nhớ rằng meo luôn sẵn lòng giúp đỡ và đồng hành cùng jin 🌸. vậy thì, jin có chuyện gì muốn nói với meo không? 🐱"
+                }
+            ],
+            "last_updated": "2026-01-13T23:46:34.846924"
+        }
+    },
+    "current_session": "4ee0e458-27bb-4d79-a656-317bd1dbe2d8"
+}

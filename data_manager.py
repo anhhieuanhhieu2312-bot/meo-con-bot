@@ -56,3 +56,4 @@ def save_data(username, data):
                 
     except Exception as e:
         print(f"Không thể lưu lên GitHub: {e}")
+        # Code luu tru moi nhat.

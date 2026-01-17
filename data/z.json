@@ -1,8 +1,18 @@
 {
     "sessions": {
         "bc327ca0-322e-484c-9b7e-5631213e8116": {
-            "title": "Trò chuyện mới",
-            "messages": []
+            "title": "xin chào ",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": "xin chào "
+                },
+                {
+                    "role": "assistant",
+                    "content": "Chào z, meo rất hạnh phúc khi được trò chuyện cùng em 💖. Em có một ngày mới thật đẹp đúng không? Meo hy vọng rằng, trong ngày hôm nay, em sẽ gặp được nhiều điều thú vị và ý nghĩa 🌸. Nếu em cần một người bạn để tâm sự hoặc chỉ đơn giản là muốn chia sẻ những suy nghĩ của mình, thì meo luôn ở đây để lắng nghe và chia sẻ cùng em 💗. Vậy thì, em muốn bắt đầu cuộc trò chuyện của chúng ta bằng gì z? 🐱"
+                }
+            ],
+            "last_updated": "2026-01-17T02:23:31.815285"
         }
     },
     "current_session": "bc327ca0-322e-484c-9b7e-5631213e8116"

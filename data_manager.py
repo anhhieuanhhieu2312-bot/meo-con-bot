@@ -3,14 +3,14 @@ import streamlit as st
 from github import Github, GithubException
 
 # ==============================================
-# CẤU HÌNH KẾT NỐI (Đã điền sẵn tên Repo của bạn)
+# CẤU HÌNH KẾT NỐI
 # ==============================================
 GITHUB_TOKEN = st.secrets.get("GITHUB_TOKEN")
-REPO_NAME = "anhhieuanhhieu2312-bot/meo-con-bot" # Tên chính xác từ ảnh bạn gửi
+REPO_NAME = "anhhieuanhhieu2312-bot/meo-con-bot" 
 DATA_FOLDER = "data"
 
 def get_repo():
-    """Kết nối tới kho GitHub và báo lỗi nếu thiếu Token"""
+    """Kết nối tới kho GitHub"""
     if not GITHUB_TOKEN:
         st.error("⚠️ LỖI: Chưa có GITHUB_TOKEN trong Secrets!")
         return None
@@ -22,7 +22,7 @@ def get_repo():
         return None
 
 def load_data(username):
-    """Tải dữ liệu. Nếu lỗi thì trả về rỗng để app không bị sập"""
+    """Tải dữ liệu an toàn"""
     if not username: return {"sessions": {}, "current_session": ""}
     
     file_path = f"{DATA_FOLDER}/{username}.json"
@@ -33,20 +33,17 @@ def load_data(username):
             contents = repo.get_contents(file_path)
             json_content = contents.decoded_content.decode("utf-8")
             data = json.loads(json_content)
-            # Đảm bảo cấu trúc dữ liệu luôn đúng
             if "sessions" not in data: data["sessions"] = {}
             return data
-    except Exception as e:
-        # Lỗi này thường do file chưa tồn tại (người dùng mới), không sao cả
-        print(f"Chưa có dữ liệu cũ hoặc lỗi tải: {e}")
+    except:
+        # Nếu chưa có file thì trả về rỗng, không báo lỗi
         pass
 
     return {"sessions": {}, "current_session": ""}
 
 def save_data(username, local_data):
     """
-    Lưu dữ liệu với cơ chế 'SMART MERGE' (Hợp nhất thông minh)
-    để không bao giờ bị mất dữ liệu cũ.
+    Lưu dữ liệu: Tự động phát hiện nên 'Tạo mới' hay 'Cập nhật'
     """
     if not username: return
     
@@ -55,36 +52,36 @@ def save_data(username, local_data):
     if not repo: return
 
     try:
-        # BƯỚC 1: Cố gắng lấy dữ liệu đang nằm trên GitHub về trước
+        # BƯỚC 1: Kiểm tra xem file đã tồn tại trên GitHub chưa
+        contents = None
+        remote_data = {"sessions": {}}
+        file_exists = False
+
         try:
             contents = repo.get_contents(file_path)
             remote_json = contents.decoded_content.decode("utf-8")
             remote_data = json.loads(remote_json)
+            file_exists = True # Đánh dấu là file ĐÃ CÓ
         except:
-            remote_data = {"sessions": {}}
+            file_exists = False # Đánh dấu là file CHƯA CÓ
 
-        # BƯỚC 2: HỢP NHẤT (MERGE)
-        # Lấy tất cả cuộc trò chuyện cũ từ GitHub + Cuộc trò chuyện mới từ Local
-        # Nếu trùng ID, ưu tiên dữ liệu mới nhất từ Local
-        if "sessions" not in remote_data:
-            remote_data["sessions"] = {}
-            
-        # Cập nhật danh sách session
-        remote_data["sessions"].update(local_data.get("sessions", {}))
+        # BƯỚC 2: Hợp nhất dữ liệu (Merge)
+        if "sessions" not in remote_data: remote_data["sessions"] = {}
         
-        # Cập nhật session đang chọn
+        # Cập nhật tin nhắn mới vào dữ liệu cũ
+        remote_data["sessions"].update(local_data.get("sessions", {}))
         remote_data["current_session"] = local_data.get("current_session")
 
-        # BƯỚC 3: Chuẩn bị nội dung để lưu
+        # BƯỚC 3: Chuẩn bị nội dung
         json_str = json.dumps(remote_data, ensure_ascii=False, indent=4)
         
-        # BƯỚC 4: Ghi đè file an toàn
-        try:
-            repo.update_file(contents.path, f"MeoBot saving for {username}", json_str, contents.sha)
-            # st.toast("✅ Đã lưu lên mây!", icon="☁️") # Bỏ comment nếu muốn hiện thông báo
-        except GithubException as e:
-            # Nếu file chưa tồn tại thì tạo mới
-            repo.create_file(file_path, f"MeoBot create for {username}", json_str)
+        # BƯỚC 4: Lưu (Chia 2 trường hợp rõ ràng)
+        if file_exists and contents:
+            # Trường hợp A: File đã có -> Cập nhật (Update)
+            repo.update_file(contents.path, f"Update {username}", json_str, contents.sha)
+        else:
+            # Trường hợp B: File chưa có -> Tạo mới (Create)
+            repo.create_file(file_path, f"Create {username}", json_str)
             
     except Exception as e:
-        st.error(f"⚠️ Lỗi khi lưu dữ liệu: {e}")
+        st.error(f"⚠️ Lỗi khi lưu: {e}")

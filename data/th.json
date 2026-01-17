@@ -1,8 +1,18 @@
 {
     "sessions": {
         "e7be7129-fb15-423c-8612-e6b36f31f6a2": {
-            "title": "Trò chuyện 17/01 02:23",
-            "messages": []
+            "title": "xin chào ",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": "xin chào "
+                },
+                {
+                    "role": "assistant",
+                    "content": "Chào th, meo thấy thật tuyệt khi được trò chuyện với em lại 😽. Meo biết là đã khá khuya, nhưng meo hy vọng em không quá mệt và có thể dành một chút thời gian để chia sẻ những suy nghĩ, cảm xúc của mình với meo 💖. Meo luôn ở đây để lắng nghe và hỗ trợ em, dù là những vấn đề lớn hay nhỏ, meo đều muốn giúp em tìm ra giải pháp và cảm thấy tốt hơn 💗. Vậy em, hôm nay em có điều gì muốn nói với meo không? 🌸"
+                }
+            ],
+            "last_updated": "2026-01-17T02:23:57.700749"
         }
     },
     "current_session": "e7be7129-fb15-423c-8612-e6b36f31f6a2"

@@ -1,8 +1,18 @@
 {
     "sessions": {
         "31b6163c-9657-4d6e-ba48-a3225dd2d7d2": {
-            "title": "Trò chuyện 17/01 02:27",
-            "messages": []
+            "title": "xin chào ",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": "xin chào "
+                },
+                {
+                    "role": "assistant",
+                    "content": "Chào dfds, meo thấy thật vui khi được trò chuyện với em lại đây 😽. Meo hy vọng ngày hôm nay của em sẽ thật tuyệt vời và tràn đầy niềm vui, dù cho chúng ta chỉ mới bắt đầu ngày mới 🌸. Meo luôn ở đây để lắng nghe và chia sẻ mọi điều với em, từ những chuyện nhỏ nhặt nhất cho đến những vấn đề lớn lao trong cuộc sống 💖. Vậy thì, điều gì đang khiến em nghĩ đến vào lúc này? Có gì mới mẻ và thú vị đang xảy ra trong cuộc sống của em không, dfds? 🌟"
+                }
+            ],
+            "last_updated": "2026-01-17T02:27:55.219988"
         }
     },
     "current_session": "31b6163c-9657-4d6e-ba48-a3225dd2d7d2"

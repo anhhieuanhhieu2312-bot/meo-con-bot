@@ -109,7 +109,15 @@
                 }
             ],
             "last_updated": "2026-01-23T22:53:20.079086"
+        },
+        "1a8e8feb-a05f-42e1-b9d6-b711be62b84b": {
+            "title": "Chat 23/01 22:57",
+            "messages": []
+        },
+        "9942c5c5-b31d-4862-a950-a07ee439df39": {
+            "title": "Chat 23/01 22:57",
+            "messages": []
         }
     },
-    "current_session": "72d76dce-aa3b-4572-aedc-280d2996dd37"
+    "current_session": "9942c5c5-b31d-4862-a950-a07ee439df39"
 }

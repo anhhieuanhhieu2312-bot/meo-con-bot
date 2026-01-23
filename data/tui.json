@@ -89,8 +89,18 @@
             "messages": []
         },
         "72d76dce-aa3b-4572-aedc-280d2996dd37": {
-            "title": "Chat 23/01 22:52",
-            "messages": []
+            "title": "Hôm nay tớ nhặt được tiền vui ...",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": "Hôm nay tớ nhặt được tiền vui lắm"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Meo cũng vui cùng tớ đó, nhặt được tiền là may mắn lắm, hy vọng tớ sẽ có nhiều may mắn nữa trong tương lai 💖"
+                }
+            ],
+            "last_updated": "2026-01-23T22:52:53.166488"
         }
     },
     "current_session": "72d76dce-aa3b-4572-aedc-280d2996dd37"

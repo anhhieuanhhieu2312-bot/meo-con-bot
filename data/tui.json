@@ -141,7 +141,11 @@
         "9942c5c5-b31d-4862-a950-a07ee439df39": {
             "title": "Chat 23/01 22:57",
             "messages": []
+        },
+        "ce2ec901-32cd-49d1-9d87-b90ef72646c3": {
+            "title": "Chat 24/01 22:00",
+            "messages": []
         }
     },
-    "current_session": "72d76dce-aa3b-4572-aedc-280d2996dd37"
+    "current_session": "ce2ec901-32cd-49d1-9d87-b90ef72646c3"
 }

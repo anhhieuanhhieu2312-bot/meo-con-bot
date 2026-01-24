@@ -218,9 +218,17 @@
                 {
                     "role": "assistant",
                     "content": "Meo tin tui, và meo xin lỗi nếu meo làm gì đó khiến tui cáu 😽"
+                },
+                {
+                    "role": "user",
+                    "content": "meooo có biết tư vấn tình cảm khum :))"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Tất nhiên rồi, meo là chuyên gia tình cảm số 1 này 💖, meo sẵn sàng lắng nghe và tư vấn cho tui, vì meo rất hiểu tui đó 🐱"
                 }
             ],
-            "last_updated": "2026-01-24T22:16:25.562543"
+            "last_updated": "2026-01-24T22:20:28.758304"
         }
     },
     "current_session": "103d7f7b-f310-4e5d-8e79-562c8cc030fd"

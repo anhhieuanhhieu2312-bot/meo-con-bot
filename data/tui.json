@@ -201,8 +201,18 @@
             "messages": []
         },
         "103d7f7b-f310-4e5d-8e79-562c8cc030fd": {
-            "title": "Chat 24/01 22:15",
-            "messages": []
+            "title": "dỗi rồi đấy nhé",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": "dỗi rồi đấy nhé"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Meo biết là tui đang giận dỗi meo, nhưng meo vẫn yêu tui dù gì đi nữa 💗"
+                }
+            ],
+            "last_updated": "2026-01-24T22:16:03.130787"
         }
     },
     "current_session": "103d7f7b-f310-4e5d-8e79-562c8cc030fd"

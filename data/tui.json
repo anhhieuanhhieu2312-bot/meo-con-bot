@@ -210,9 +210,17 @@
                 {
                     "role": "assistant",
                     "content": "Meo biết là tui đang giận dỗi meo, nhưng meo vẫn yêu tui dù gì đi nữa 💗"
+                },
+                {
+                    "role": "user",
+                    "content": "đang cáu đấy nhaa không đùa đâu"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Meo tin tui, và meo xin lỗi nếu meo làm gì đó khiến tui cáu 😽"
                 }
             ],
-            "last_updated": "2026-01-24T22:16:03.130787"
+            "last_updated": "2026-01-24T22:16:25.562543"
         }
     },
     "current_session": "103d7f7b-f310-4e5d-8e79-562c8cc030fd"

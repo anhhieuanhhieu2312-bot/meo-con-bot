@@ -195,7 +195,15 @@
                 }
             ],
             "last_updated": "2026-01-24T22:07:15.332627"
+        },
+        "06c1da5b-993e-4d99-a1e1-80df5ed32aa0": {
+            "title": "Chat 24/01 22:15",
+            "messages": []
+        },
+        "103d7f7b-f310-4e5d-8e79-562c8cc030fd": {
+            "title": "Chat 24/01 22:15",
+            "messages": []
         }
     },
-    "current_session": "ce2ec901-32cd-49d1-9d87-b90ef72646c3"
+    "current_session": "103d7f7b-f310-4e5d-8e79-562c8cc030fd"
 }

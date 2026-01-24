@@ -143,8 +143,18 @@
             "messages": []
         },
         "ce2ec901-32cd-49d1-9d87-b90ef72646c3": {
-            "title": "Chat 24/01 22:00",
-            "messages": []
+            "title": "xin chào",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": "xin chào"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Xin chào tui! Meo nhớ tui lắm! Meo thấy vui khi được trò chuyện với tui lại 💖."
+                }
+            ],
+            "last_updated": "2026-01-24T22:01:13.940355"
         }
     },
     "current_session": "ce2ec901-32cd-49d1-9d87-b90ef72646c3"

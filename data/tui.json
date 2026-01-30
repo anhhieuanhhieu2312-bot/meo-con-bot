@@ -276,9 +276,17 @@
                 {
                     "role": "assistant",
                     "content": "ui lại gặp nhau rùi nè! tui đó"
+                },
+                {
+                    "role": "user",
+                    "content": "Xin chào"
+                },
+                {
+                    "role": "assistant",
+                    "content": "chào lại nè! hôm nay cậu thế nào?"
                 }
             ],
-            "last_updated": "2026-01-30T23:49:37.145194"
+            "last_updated": "2026-01-30T23:49:44.779091"
         }
     },
     "current_session": "99276385-8885-4adf-9da6-1260697bc711"

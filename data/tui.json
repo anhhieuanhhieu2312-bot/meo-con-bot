@@ -234,9 +234,17 @@
                 {
                     "role": "assistant",
                     "content": "Chào tui, meo nhớ tui lắm 💗, hôm nay tui có vấn đề gì muốn tâm sự với meo không?"
+                },
+                {
+                    "role": "user",
+                    "content": "Hãy kể câu chuyện đó vui vui đi"
+                },
+                {
+                    "role": "assistant",
+                    "content": "Meo nhớ lại hôm trước, meo nhặt được một chiếc ví đầy tiền, và meo cảm thấy rất vui vì có thể giữ nó cho chủ nhân thật sự, nhưng rồi meo lại gặp một anh chàng rất dễ thương và meo quyết định trả lại ví cho anh ấy, và anh ấy đã rất biết ơn meo, meo cảm thấy rất hạnh phúc vì đã làm một việc tốt đẹp 😽"
                 }
             ],
-            "last_updated": "2026-01-30T23:00:49.552880"
+            "last_updated": "2026-01-30T23:02:24.061102"
         }
     },
     "current_session": "103d7f7b-f310-4e5d-8e79-562c8cc030fd"
